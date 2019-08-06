@@ -3,8 +3,8 @@ import networkx as nx
 import matplotlib.pyplot as plt
 import copy
 
-genomeA = [[1,4,5,2,3],[6,7]]
-genomeB = [[1,2,3,4,5,6,7]]
+genomeA = [[1,4,5,6,2,3],[7,8]]
+genomeB = [[1,2,3,4,5,6,7],[8]]
 
 def gene_extremities(genome):
     genome_gene_ext = []
@@ -95,10 +95,10 @@ def greedy_DCJ_sorting(adjacencies_genomeA, adjacencies_genomeB):
                         adjacencies_genomeA.append([extremity for extremity in v if extremity != q][0])
 
 
-
         #else if the element is a telomere:
 
         elif type(element) is str:
+            print('telomere: ', element)
 
             p = element
 
@@ -123,3 +123,413 @@ def greedy_DCJ_sorting(adjacencies_genomeA, adjacencies_genomeB):
 
 sortingA = greedy_DCJ_sorting(adjacencies_genomeA, adjacencies_genomeB)
 print(sortingA)
+
+def sort_one_level_down(adjacencies_genomeA, adjacencies_genomeB):
+    level_operations = []
+    level_adjacency_intermediates = []
+    adjacencies_genomeA_intermediate = copy.deepcopy(adjacencies_genomeA)
+
+    for element in adjacencies_genomeB:
+        # if element is an adjacency:
+        if type(element) is tuple:
+            print('adjacency: ', element)
+            p = element[0]
+            q = element[1]
+
+            p_element = [(x, y) for x, y in adjacencies_genomeA_intermediate if x == p or y == p]
+            if len(p_element) != 0:
+
+                u = p_element[0]
+            # else the element of A containing p is a telomere
+            else:
+                # u = (p, '.')
+                u = p
+            else:
+74
+                #v = (q, '.')
+75
+                v = q
+76
+​
+77
+            if u != v:
+78
+                adjacencies_genomeA.append((p, q))
+79
+                adjacencies_genomeA.remove(u)
+80
+                adjacencies_genomeA.remove(v)
+81
+​
+82
+                #if u is an adjacency:
+83
+                if type(u) is tuple:
+84
+                    #if v is an adjacency:
+85
+                    if type(v) is tuple:
+86
+                        adjacencies_genomeA.append(([extremity for extremity in u if extremity != p][0], [extremity for extremity in v if extremity != q][0]))
+87
+                    #else v is a telomere
+88
+                    else:
+89
+                        adjacencies_genomeA.append([extremity for extremity in u if extremity != p][0])
+90
+​
+91
+                #else u is a telomere
+92
+                else:
+93
+                    #if v is an adjacency
+94
+                    if type(v) is tuple:
+95
+                        adjacencies_genomeA.append([extremity for extremity in v if extremity != q][0])
+96
+​
+97
+​
+98
+​
+99
+        #else if the element is a telomere:
+100
+​
+101
+        elif type(element) is str:
+102
+​
+103
+            p = element
+104
+​
+105
+            p_element = [(x,y) for x, y in adjacencies_genomeA if x == p or y == p]
+106
+​
+107
+            if len(p_element) != 0:
+108
+                u = p_element[0]
+109
+            #else the element of A containing p is a telomere
+110
+            else:
+111
+                u = p
+112
+​
+113
+​
+114
+            #if u is not a telomere:
+115
+            if u != p:
+116
+                adjacencies_genomeA.append(u[0])
+117
+                adjacencies_genomeA.append(u[1])
+118
+                adjacencies_genomeA.remove(u)
+119
+​
+120
+        print(adjacencies_genomeA)
+121
+​
+122
+    return adjacencies_genomeA
+123
+​
+124
+sortingA = greedy_DCJ_sorting(adjacencies_genomeA, adjacencies_genomeB)            else:
+74
+                #v = (q, '.')
+75
+                v = q
+76
+​
+77
+            if u != v:
+78
+                adjacencies_genomeA.append((p, q))
+79
+                adjacencies_genomeA.remove(u)
+80
+                adjacencies_genomeA.remove(v)
+81
+​
+82
+                #if u is an adjacency:
+83
+                if type(u) is tuple:
+84
+                    #if v is an adjacency:
+85
+                    if type(v) is tuple:
+86
+                        adjacencies_genomeA.append(([extremity for extremity in u if extremity != p][0], [extremity for extremity in v if extremity != q][0]))
+87
+                    #else v is a telomere
+88
+                    else:
+89
+                        adjacencies_genomeA.append([extremity for extremity in u if extremity != p][0])
+90
+​
+91
+                #else u is a telomere
+92
+                else:
+93
+                    #if v is an adjacency
+94
+                    if type(v) is tuple:
+95
+                        adjacencies_genomeA.append([extremity for extremity in v if extremity != q][0])
+96
+​
+97
+​
+98
+​
+99
+        #else if the element is a telomere:
+100
+​
+101
+        elif type(element) is str:
+102
+​
+103
+            p = element
+104
+​
+105
+            p_element = [(x,y) for x, y in adjacencies_genomeA if x == p or y == p]
+106
+​
+107
+            if len(p_element) != 0:
+108
+                u = p_element[0]
+109
+            #else the element of A containing p is a telomere
+110
+            else:
+111
+                u = p
+112
+​
+113
+​
+114
+            #if u is not a telomere:
+115
+            if u != p:
+116
+                adjacencies_genomeA.append(u[0])
+117
+                adjacencies_genomeA.append(u[1])
+118
+                adjacencies_genomeA.remove(u)
+119
+​
+120
+        print(adjacencies_genomeA)
+121
+​
+122
+    return adjacencies_genomeA
+123
+​
+124
+sortingA = greedy_DCJ_sorting(adjacencies_genomeA, adjacencies_genomeB)            else:
+74
+                #v = (q, '.')
+75
+                v = q
+76
+​
+77
+            if u != v:
+78
+                adjacencies_genomeA.append((p, q))
+79
+                adjacencies_genomeA.remove(u)
+80
+                adjacencies_genomeA.remove(v)
+81
+​
+82
+                #if u is an adjacency:
+83
+                if type(u) is tuple:
+84
+                    #if v is an adjacency:
+85
+                    if type(v) is tuple:
+86
+                        adjacencies_genomeA.append(([extremity for extremity in u if extremity != p][0], [extremity for extremity in v if extremity != q][0]))
+87
+                    #else v is a telomere
+88
+                    else:
+89
+                        adjacencies_genomeA.append([extremity for extremity in u if extremity != p][0])
+90
+​
+91
+                #else u is a telomere
+92
+                else:
+93
+                    #if v is an adjacency
+94
+                    if type(v) is tuple:
+95
+                        adjacencies_genomeA.append([extremity for extremity in v if extremity != q][0])
+96
+​
+97
+​
+98
+​
+99
+        #else if the element is a telomere:
+100
+​
+101
+        elif type(element) is str:
+102
+​
+103
+            p = element
+104
+​
+105
+            p_element = [(x,y) for x, y in adjacencies_genomeA if x == p or y == p]
+106
+​
+107
+            if len(p_element) != 0:
+108
+                u = p_element[0]
+109
+            #else the element of A containing p is a telomere
+110
+            else:
+111
+                u = p
+112
+​
+113
+​
+114
+            #if u is not a telomere:
+115
+            if u != p:
+116
+                adjacencies_genomeA.append(u[0])
+117
+                adjacencies_genomeA.append(u[1])
+118
+                adjacencies_genomeA.remove(u)
+119
+​
+120
+        print(adjacencies_genomeA)
+121
+​
+122
+    return adjacencies_genomeA
+123
+​
+124
+sortingA = greedy_DCJ_sorting(adjacencies_genomeA, adjacencies_genomeB)
+125
+print(sortingA)
+126
+
+125
+print(sortingA)
+126
+
+125
+print(sortingA)
+126
+
+            q_element = [(x, y) for x, y in adjacencies_genomeA_intermediate if x == q or y == q]
+            if len(q_element) != 0:
+                v = q_element[0]
+
+            # else the element of A containing q is a telomere
+            else:
+                # v = (q, '.')
+                v = q
+
+            if u != v:
+                adjacencies_genomeA_intermediate.append((p, q))
+                adjacencies_genomeA_intermediate.remove(u)
+                adjacencies_genomeA_intermediate.remove(v)
+
+                # if u is an adjacency:
+                if type(u) is tuple:
+                    # if v is an adjacency:
+                    if type(v) is tuple:
+                        adjacencies_genomeA_intermediate.append(([extremity for extremity in u if extremity != p][0],
+                                                    [extremity for extremity in v if extremity != q][0]))
+                        operation = ((u, v), ((p,q), ([extremity for extremity in u if extremity != p][0],
+                                                    [extremity for extremity in v if extremity != q][0])))
+                        level_operations.append((operation))
+                        level_adjacency_intermediates.append((adjacencies_genomeA_intermediate))
+
+                    # else v is a telomere
+                    else:
+                        adjacencies_genomeA_intermediate.append([extremity for extremity in u if extremity != p][0])
+                        operation = ((u, v), ((p,q), ([extremity for extremity in u if extremity != p][0])))
+                        level_operations.append((operation))
+                        level_adjacency_intermediates.append((adjacencies_genomeA_intermediate))
+
+                # else u is a telomere
+                else:
+                    # if v is an adjacency
+                    if type(v) is tuple:
+                        adjacencies_genomeA_intermediate.append([extremity for extremity in v if extremity != q][0])
+                        operation = ((u, v),((p,q), ([extremity for extremity in v if extremity != q][0])))
+                        level_operations.append((operation))
+                        level_adjacency_intermediates.append((adjacencies_genomeA_intermediate))
+
+
+
+
+        # else if the element is a telomere:
+
+        elif type(element) is str:
+            print('telomere: ', element)
+
+            p = element
+
+            p_element = [(x, y) for x, y in adjacencies_genomeA if x == p or y == p]
+
+            if len(p_element) != 0:
+                u = p_element[0]
+            # else the element of A containing p is a telomere
+            else:
+                u = p
+
+            # if u is not a telomere:
+            if u != p:
+                adjacencies_genomeA.append(u[0])
+                adjacencies_genomeA.append(u[1])
+                adjacencies_genomeA.remove(u)
+                operation = ((u), ((p), u))
+                level_operations.append((operation))
+                level_adjacency_intermediates.append((adjacencies_genomeA_intermediate))
+
+
+    return level_operations, level_adjacency_intermediates
